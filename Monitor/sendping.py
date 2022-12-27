@@ -1,8 +1,14 @@
 from scapy.all import *
 import time
+import csv
+
+
+f = open('ping_results_p.csv', 'w')
+writer = csv.writer(f)
+writer.writerow(["Index" , "Time_recev"])
+
 
 count = 0
-sum = 0
 conf.verb = 0
 while True:
     count = count+1
@@ -15,6 +21,7 @@ while True:
         end =0.6
     else:
         end = time.perf_counter() - start
-    sum += end
+    writer.writerow([count ,end])
     print('{:.6f}s for the calculation'.format(end))
     time.sleep(4)
+f.close()
