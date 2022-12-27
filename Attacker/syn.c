@@ -120,11 +120,17 @@ int main (void)
 		exit(0);
 	}
 	//Uncommend the loop if you want to flood :)
-	for(int i =0 ; i<10 ; i++)
-	{
-		for(int n =0 ; n<100000 ; n++)
-		{
 
+	FILE *fpt;
+	fpt = fopen("syns_results_c.csv", "w+");
+	fprintf(fpt,"Index, Time_send\n");
+	clock_t start;
+	int counter = 1;
+	for(int outloop =0 ; outloop<100 ; outloop++)
+	{
+		for(int inloop =0 ; inloop<10000 ; inloop++)
+		{
+			start = clock();
 			char st[sizeof "255.255.255.255"] = "";
 			char n [sizeof "255"]="";
 			for (int i=0; i<4;i++)
@@ -155,8 +161,11 @@ int main (void)
 			{
 				printf ("Packet Send \n");
 			}
+			fprintf(fpt,"%d, %f\n", counter ,(((double)(clock() - start))/CLOCKS_PER_SEC));
+			counter++;
 		}
 	}
+	fclose(fpt);
 	
 	return 0;
 }
